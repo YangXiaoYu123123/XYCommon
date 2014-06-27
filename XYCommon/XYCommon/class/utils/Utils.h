@@ -14,7 +14,7 @@
 #define URLParseKeyPage		@"URLParseKeyPage"
 #define URLParseKeyParam	@"URLParseKeyParam"
 #define URLParseKeyUrl		@"URLParseKeyUrl"
-
+#define gImageCacheDir              @"cache_image"
 
 
 extern NSString * getImageCacheDir();

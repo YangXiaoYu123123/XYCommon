@@ -8,9 +8,10 @@
 
 #import "CacheURLProtocol.h"
 #import "Base64.h"
+#import "XYCommon.h"
 
 @interface CacheURLProtocol()
-@property(nonatomic, retain) BHttpRequestOperation *cacheOperation;
+@property(nonatomic, retain) XYHttpRequestOperation *cacheOperation;
 @end
 
 @implementation CacheURLProtocol
@@ -29,21 +30,21 @@
     NSString *urlString = [cacheURL httpURLString];
     NSURL *reqURL = [NSURL URLWithString:urlString];
     
-    BHttpRequestCache *cache = [BHttpRequestCache fileCache];
+    XYHttpRequestCache *cache = [XYHttpRequestCache fileCache];
     NSData *data = [cache cacheDataForURL:reqURL];
     if (data) {
         [self.client URLProtocol:self didLoadData:data];
         [self.client URLProtocolDidFinishLoading:self];
         return;
     }
-    BHttpClient *client = [BHttpClient defaultClient];
+    XYHTTPClient *client = [XYHTTPClient defaultClient];
     NSURLRequest *request = [client requestWithGetURL:reqURL parameters:nil];
-    BHttpRequestOperation *operation = [client dataRequestWithURLRequest:request
-                                                                 success:^(BHttpRequestOperation *operation, id data) {
+    XYHttpRequestOperation *operation = [client dataRequestWithURLRequest:request
+                                                                 success:^(XYHttpRequestOperation *operation, id data) {
                                                                      
                                                                      [self.client URLProtocolDidFinishLoading:self];
                                                                  }
-                                                                 failure:^(BHttpRequestOperation *request, NSError *error) {                                                                     
+                                                                 failure:^(XYHttpRequestOperation *request, NSError *error) {
                                                                      [self.client URLProtocol:self didFailWithError:error];
                                                                  }];
     [operation setReceiveDataBlock:^(NSData *data) {
@@ -67,8 +68,8 @@
     if (self.cacheOperation) {
         [self.cacheOperation cancel];
     }
-    [_cacheOperation release];
-    [super dealloc];
+    _cacheOperation =nil;
+    
 }
 @end
 

@@ -283,8 +283,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								 charset:kBase64EncodeChars
 								  padded:YES];
 	if (converted) {
-		result = [[[NSString alloc] initWithData:converted
-										encoding:NSUTF8StringEncoding] autorelease];
+		result = [[NSString alloc] initWithData:converted
+										encoding:NSUTF8StringEncoding];
 	}
 	return result;
 }
@@ -296,8 +296,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								 charset:kBase64EncodeChars
 								  padded:YES];
 	if (converted) {
-		result = [[[NSString alloc] initWithData:converted
-										encoding:NSUTF8StringEncoding] autorelease];
+		result = [[NSString alloc] initWithData:converted
+										encoding:NSUTF8StringEncoding];
 	}
 	return result;
 }
@@ -362,8 +362,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								 charset:kWebSafeBase64EncodeChars
 								  padded:padded];
 	if (converted) {
-		result = [[[NSString alloc] initWithData:converted
-										encoding:NSUTF8StringEncoding] autorelease];
+		result = [[NSString alloc] initWithData:converted
+										encoding:NSUTF8StringEncoding];
 	}
 	return result;
 }
@@ -377,8 +377,8 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 								 charset:kWebSafeBase64EncodeChars
 								  padded:padded];
 	if (converted) {
-		result = [[[NSString alloc] initWithData:converted
-										encoding:NSUTF8StringEncoding] autorelease];
+		result = [[NSString alloc] initWithData:converted
+										encoding:NSUTF8StringEncoding];
 	}
 	return result;
 }
@@ -398,15 +398,15 @@ GTM_INLINE NSUInteger GuessDecodedLength(NSUInteger srcLen) {
 + (NSString*)stringByWebSafeEncodeString:(NSString*)string {     
 	NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     data = [self webSafeEncodeData:data padded:NO];
-    NSString *result = [[[NSString alloc] initWithData:data
-                                              encoding:NSUTF8StringEncoding] autorelease];
+    NSString *result = [[NSString alloc] initWithData:data
+                                              encoding:NSUTF8StringEncoding];
     return result; 
 }
 
 + (NSString*)stringByWebSafeDecodeString:(NSString*)string{ 
     NSData *data = [self webSafeDecodeString:string];
-    NSString *result = [[[NSString alloc] initWithData:data
-                                              encoding:NSUTF8StringEncoding] autorelease];
+    NSString *result = [[NSString alloc] initWithData:data
+                                              encoding:NSUTF8StringEncoding];
     return result; 
 }
 

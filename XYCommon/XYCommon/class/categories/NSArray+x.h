@@ -7,6 +7,7 @@
 //
 
 
+#import <Foundation/Foundation.h>
 
 @interface NSArray(x)
 - (NSArray *)reverse ;

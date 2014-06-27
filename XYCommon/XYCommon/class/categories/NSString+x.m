@@ -9,7 +9,10 @@
 #import "NSString+x.h"
 #import "pinyin.h"
 #import <CommonCrypto/CommonHMAC.h>
-
+#import "RegexKitLite.h"
+#import "NSDictionary+x.h"
+#import "Utils.h"
+#import "Base64.h"
 
 @implementation NSString(x)
 - (NSString *) md5{
@@ -41,7 +44,7 @@
 	return [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"{%@}",ph] withString:s];
 }
 - (NSDate *)dateWithFormat:(NSString *)format{
-    NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:format];
     NSDate *d =[df dateFromString:self ];
     return d;
@@ -76,7 +79,7 @@
     for (int i=0; i<n; i++) {
         [s appendFormat:@"%c", pinyin([self characterAtIndex:i])];
     }
-    DLOG(@"pinyin:%@",s);
+    NSLog(@"pinyin:%@",s);
     return [s description];
 }
 - (BOOL)isEmail{
@@ -90,7 +93,7 @@
     NSError *err = nil;
 	BOOL flag = [fileManager moveItemAtPath:self toPath:newPath error:&err];
     if (!flag || err) {
-        DLOG(@"error:%@",err);
+        NSLog(@"error:%@",err);
     }
     return flag;
 }
@@ -99,7 +102,7 @@
     NSError *err = nil;
 	BOOL flag = [fileManager copyItemAtPath:self toPath:newPath error:&err];
     if (!flag || err) {
-        DLOG(@"error:%@",err);
+        NSLog(@"error:%@",err);
     }
     return flag;
 }
@@ -125,7 +128,7 @@
     NSError *err = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:&err];
     if (err) {
-        DLOG(@"[NSString] jsonObject error:%@",err);
+        NSLog(@"[NSString] jsonObject error:%@",err);
     }
     return json;
 }

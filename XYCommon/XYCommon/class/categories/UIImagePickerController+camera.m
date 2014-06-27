@@ -7,6 +7,7 @@
 //
 
 #import "UIImagePickerController+camera.h"
+#import "XYCommon.h"
 
 @implementation UIImagePickerController(camera)
 + (UIImagePickerController *)imagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes{

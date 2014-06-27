@@ -9,6 +9,7 @@
 
 #import "UIImageView+cache.h"
 #import <objc/runtime.h>
+#import "XYCommon.h"
 
 static char UIImageViewCacheOperationObjectKey;
 
@@ -53,10 +54,10 @@ static char UIImageViewCacheOperationObjectKey;
         }
     }
     self.image = placeholderImage;
-    BHttpClient *client = [BHttpClient defaultClient];
+    XYHTTPClient *client = [XYHTTPClient defaultClient];
     NSURLRequest *request = [client requestWithGetURL:imageURL parameters:nil];
-    BHttpRequestOperation *operation = [client dataRequestWithURLRequest:request
-                                                                 success:^(BHttpRequestOperation *operation, id data) {
+    XYHttpRequestOperation *operation = [client dataRequestWithURLRequest:request
+                                                                 success:^(XYHttpRequestOperation *operation, id data) {
                                                                      NSDictionary *userInfo = [operation userInfo];
                                                                      id object = userInfo?[userInfo valueForKey:@"object"]:nil;
                                                                      NSString *fp = operation.cacheFilePath;
@@ -67,14 +68,14 @@ static char UIImageViewCacheOperationObjectKey;
                                                                          }
                                                                      }
                                                                  }
-                                                                 failure:^(BHttpRequestOperation *request, NSError *error) {
+                                                                 failure:^(XYHttpRequestOperation *request, NSError *error) {
                                                                      
                                                                      if (callback) {
                                                                          callback(imageURL, nil, error);
                                                                      }
                                                                  }];
     [operation setUserInfo:[NSDictionary dictionaryWithObject:self forKey:@"object"]];
-    [operation setRequestCache:[BHttpRequestCache fileCache]];
+    [operation setRequestCache:[XYHttpRequestCache fileCache]];
     self.requestOperation = operation;
     [[[self class] sharedImageRequestOperationQueue] addOperation:self.requestOperation];
     return operation;
@@ -91,9 +92,9 @@ static char UIImageViewCacheOperationObjectKey;
 }
 
 + (NSString *)cachePathForURL:(NSURL *)imageURL{
-    return [BHttpRequestCache cachePathForURL:imageURL];
+    return [XYHttpRequestCache cachePathForURL:imageURL];
 }
 + (NSData *)cacheDataForURL:(NSURL *)imageURL{
-    return [BHttpRequestCache cacheDataForURL:imageURL];
+    return [XYHttpRequestCache cacheDataForURL:imageURL];
 }
 @end

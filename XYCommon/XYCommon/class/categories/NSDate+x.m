@@ -7,10 +7,11 @@
 //
 
 #import "NSDate+x.h"
+#import "XYCommon.h"
 
 @implementation NSDate(x)
 - (NSString *)weekName{
-    NSDateFormatter *df = AUTORELEASE([[NSDateFormatter alloc] init]);
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setLocale:[NSLocale currentLocale]];
     [df setDateStyle:NSDateFormatterLongStyle];
     [df setTimeStyle:NSDateFormatterLongStyle];
@@ -18,7 +19,7 @@
     return [df stringFromDate:self];
 }
 - (NSString *)format:(NSString *)f{
-	NSDateFormatter *df = AUTORELEASE([[NSDateFormatter alloc] init]);
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	NSLocale *loc = [NSLocale currentLocale];
 	[df setLocale:loc];
 	[df setDateStyle:NSDateFormatterShortStyle];
@@ -54,8 +55,8 @@
     return [self format:NSLocalizedString(@"yyyy-MM-dd HH:mm", nil)];
 }
 - (NSString *)GMTFormat{
-    NSDateFormatter *gmtFormatter = AUTORELEASE([[NSDateFormatter alloc] init]);
-    [gmtFormatter setLocale:AUTORELEASE([[NSLocale alloc] initWithLocaleIdentifier:@"en_US"])];
+    NSDateFormatter *gmtFormatter = [[NSDateFormatter alloc] init];
+    [gmtFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     [gmtFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss z"];
     NSTimeZone *tz = [NSTimeZone timeZoneForSecondsFromGMT:0];
     [gmtFormatter setTimeZone:tz];

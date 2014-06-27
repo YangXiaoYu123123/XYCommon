@@ -7,6 +7,7 @@
 //
 
 #import "DBCache.h"
+#import "XYCommon.h"
 
 #define CacheSqlQuery	@"select value from cache where domain=? and key=?"
 #define CacheSqlRmForKey	@"delete from cache where domain=? and key=?"

@@ -19,7 +19,7 @@
     [self appendData:[BodyBoundaryString dataUsingEncoding:NSUTF8StringEncoding]];
 }
 - (void)appendString:(NSString *)s forKey:(NSString *)key{
-    NSMutableString *ms=[[[NSMutableString alloc] init] autorelease];
+    NSMutableString *ms=[[NSMutableString alloc] init];
     if ([self length] < 10 ) {        
         [ms appendString:BodyBoundaryString];
     }

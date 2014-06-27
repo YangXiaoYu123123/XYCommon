@@ -7,6 +7,7 @@
 //
 
 #import "NSData+x.h"
+#import "XYCommon.h"
 
 @implementation NSData(x)
 - (id)json{

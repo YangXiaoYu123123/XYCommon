@@ -7,6 +7,8 @@
 //
 
 #import "Utils.h"
+#import "NSString+x.h"
+#import "RegexKitLite.h"
 
 #define WEB_CACHE_DIR		@"web_cache"
 #define WEB_TMP_DIR		@"web_tmp"
@@ -113,7 +115,7 @@ NSString * getChineseCalendar(NSDate * date){
     
     NSString *chineseCal_str =[NSString stringWithFormat: @"%@年 %@%@",y_str,m_str,d_str];  
     
-    [localCal release];  
+    //[localCal release];
     
     return chineseCal_str;  
 }
@@ -141,7 +143,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
         return YES;
     }
     // add
-    UILocalNotification *notification = AUTORELEASE( [[UILocalNotification alloc] init] );
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
     if (notification!=nil){
         
         NSDate *now=[NSDate date];
@@ -230,7 +232,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 	[df setDateFormat:f];
 	
 	NSString *s = [df stringFromDate:date];
-	[df release];
+	//[df release];
 	return s;
 }
 + (NSString *) formatSize:(long long)size{
@@ -322,10 +324,10 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 	return [fileManager createFileAtPath:file contents:cacheData attributes:nil]?file:nil;
 }
 + (NSString *) removeHTMLTag:(NSString *)html{
-	NSString *s = [html stringByReplacingOccurrencesOfRegex:@"<[^>]+>" withString:@""];
-	s = [s stringByReplacingOccurrencesOfRegex:@"&nbsp;?" withString:@""];
-	s = [s stringByReplacingOccurrencesOfRegex:@"[\n\r]+[\t\r \n]*" withString:@"\n"];
-	return s;
+//	NSString *s = [html stringByReplacingOccurrencesOfRegex:@"<[^>]+>" withString:@""];
+//	s = [s stringByReplacingOccurrencesOfRegex:@"&nbsp;?" withString:@""];
+//	s = [s stringByReplacingOccurrencesOfRegex:@"[\n\r]+[\t\r \n]*" withString:@"\n"];
+	return @"";
 }
 
 + (NSString *)	serializeNetParams:(NSDictionary *)dict{
@@ -376,7 +378,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 }
 + (NSString *)	getChineseWeek:(int)n{
 	if ( n>7 || n<0 ) {
-		NSDateFormatter *df = [[[NSDateFormatter alloc] init] autorelease];
+		NSDateFormatter *df = [[NSDateFormatter alloc] init];
 		[df setLocale:[NSLocale currentLocale]];
 		[df setDateStyle:NSDateFormatterLongStyle];
 		[df setTimeStyle:NSDateFormatterLongStyle];
@@ -428,7 +430,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 	[comp setMinute:0];
 	[comp setSecond:0];
 	NSDate *date = [cal dateFromComponents:comp];  
-	[cal release];
+	//[cal release];
 	return [date timeIntervalSince1970];
 }
 + (NSInteger)getEndTimestampOfDay:(long long)time{
@@ -444,7 +446,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 	[comp setMinute:59];
 	[comp setSecond:59];
 	NSDate *date = [cal dateFromComponents:comp];  
-	[cal release];
+	//[cal release];
 	return [date timeIntervalSince1970];
 }
 + (NSInteger)	getEndTimestampOfHour:(long long)time{
@@ -461,7 +463,7 @@ BOOL setAlarm(NSString *key, id userInfo, NSString *msg, NSString *action, NSTim
 	[comp setMinute:0];
 	[comp setSecond:0];
 	NSDate *date = [cal dateFromComponents:comp];  
-	[cal release];
+	//[cal release];
 	return [date timeIntervalSince1970];
 }
 + (NSDictionary *) parseURL:(NSString *)url withParam:(NSDictionary *)param{

@@ -7,6 +7,7 @@
 //
 
 #import "NSArray+x.h"
+#import "XYCommon.h"
 
 @implementation NSArray(x)
 - (NSArray *)reverse {
@@ -32,7 +33,7 @@
     if (err) {
         DLOG(@"[NSString] jsonObject error:%@",err);
     }
-    NSString *s = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSString *s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     return s;
 }
 - (BOOL)containsStringIgnoreCase:(NSString *)string{

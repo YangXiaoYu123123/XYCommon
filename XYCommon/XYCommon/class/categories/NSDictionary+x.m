@@ -8,6 +8,8 @@
 
 #import "NSDictionary+x.h"
 #import "NSMutableData+x.h"
+#import "XYCommon.h"
+#import "NSDate+x.h"
 
 @implementation NSDictionary(x)
 
@@ -64,7 +66,7 @@
     if (err) {
         DLOG(@"[NSString] jsonObject error:%@",err);
     }
-    NSString *s = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSString *s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     return s;
 }
 

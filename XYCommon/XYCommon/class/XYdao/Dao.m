@@ -7,6 +7,7 @@
 //
 
 #import "Dao.h"
+#import "XYCommon.h"
 
 //#define dbFile			@"db.sqlite"
 //#define sqlFile			@"sql.plist"
@@ -18,8 +19,7 @@ static  FMDatabase *__db__ = nil;
 }
 + (FMDatabase*)db{  
     if (!__db__  || ![__db__ open]) {
-        RELEASE(__db__);
-        __db__ = [[FMDatabase databaseWithPath:getFilePath(@"db.sqlite", nil, nil)] retain] ;
+        __db__ = [FMDatabase databaseWithPath:getFilePath(@"db.sqlite", nil, nil)]  ;
         [__db__ open];
         DLOG(@"sqlite lib:%@", getFilePath(@"db.sqlite", nil, nil));
     }

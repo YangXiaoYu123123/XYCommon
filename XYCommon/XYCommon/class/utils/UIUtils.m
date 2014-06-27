@@ -7,7 +7,7 @@
 //
 
 #import "UIUtils.h"
-#import "BCommon.h"
+#import "XYCommon.h"
 
 id loadViewFromNib(Class nibClass,id owner){
     return loadNib(NSStringFromClass(nibClass), owner);
@@ -83,7 +83,7 @@ UILabel * createLabel(CGRect frame,UIFont *font,UIColor *bg,UIColor *textColor,U
 	label.numberOfLines = numOfLines;
 	label.lineBreakMode = lineBreakMode;
 	label.textAlignment = textAlign;
-	return [label autorelease];
+	return label;
 }
 UIButton *createCustomButton(CGRect rect,NSString *title,UIColor *titleColor,UIColor *titleShadowColor,NSString *imgName,NSString *imgName2){ 
     if (!imgName2) {        
@@ -98,12 +98,12 @@ UIButton *createCustomButton(CGRect rect,NSString *title,UIColor *titleColor,UIC
         if (bg1) {
             rect.size = bg1.size;
         }else{            
-            float w = [title sizeWithFont:gButtonTitleFont].width+10;
+            float w = [title sizeWithFont:[UIFont systemFontOfSize:14]].width+10;
             rect.size = CGSizeMake(MAX(w, 48), 24);
         }
     }
 	UIButton *btn = [[XUIButton alloc] initWithFrame:rect];
-	btn.titleLabel.font = gButtonTitleFont;
+	btn.titleLabel.font = [UIFont systemFontOfSize:14];
     if (titleShadowColor) {
         btn.titleLabel.shadowColor = titleShadowColor;
         btn.titleLabel.shadowOffset = CGSizeMake(0, -1);
@@ -122,20 +122,20 @@ UIButton *createCustomButton(CGRect rect,NSString *title,UIColor *titleColor,UIC
     }
 	if(bg1) [btn setBackgroundImage:bg1 forState:UIControlStateNormal];
 	if(bg2) [btn setBackgroundImage:bg2 forState:UIControlStateHighlighted];
-	return [btn autorelease];
+	return btn;
 
 }
 UIBarButtonItem * createBarButtonItem(NSString *title,id target,SEL action){
     //UIImage *btnBg = [UIImage imageNamed:@"btn_bg.png"];
     //[btnBg stretchableImageWithLeftCapWidth:btnBg.size.height/2 topCapHeight:btnBg.size.width/2];
-    CGSize tsize = [title sizeWithFont:gButtonTitleFont];
+    CGSize tsize = [title sizeWithFont:[UIFont systemFontOfSize:14]];
     CGRect rect = CGRectMake(0, 0, tsize.width+12, 28);
     
-    UIButton *btn = [[[XUIButton alloc] initWithFrame:rect] autorelease];
+    UIButton *btn = [[XUIButton alloc] initWithFrame:rect];
     //[btn setBackgroundImage:btnBg forState:UIControlStateNormal];
     [btn setTitle:title forState:UIControlStateNormal];
-    [btn.titleLabel setFont:gButtonTitleFont];
-    [btn setTitleColor:gButtonTitleColor  forState:UIControlStateNormal];
+    [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    //[btn setTitleColor:gButtonTitleColor  forState:UIControlStateNormal];
     [btn.layer setBorderColor:[UIColor colorWithWhite:0.96 alpha:1.0].CGColor];
     [btn.layer setBorderWidth:1.0];
     //[btn setTitleShadowColor:gButtonTitleShadowColor forState:UIControlStateNormal];
@@ -145,22 +145,22 @@ UIBarButtonItem * createBarButtonItem(NSString *title,id target,SEL action){
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [item setTarget:target];
     [item setAction:action];
-    return [item autorelease];
+    return item;
 }
 UIBarButtonItem * createBarImageButtonItem(NSString *iconName,id target,SEL action){
     UIButton *btn = createImageButton(CGRectZero, iconName, target, action);
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     //[item setTarget:target];
     //[item setAction:action];
-    return [item autorelease];
+    return item;
 }
 UIButton * createRoundCornerButton(CGRect rect,NSString *title, id target, SEL action){
     if (rect.size.width==0) {
-        rect.size.width = [title sizeWithFont:gButtonTitleFont].width+20;
+        rect.size.width = [title sizeWithFont:[UIFont systemFontOfSize:14]].width+20;
         rect.size.height = 32;
     }
 	UIButton *_btn = [[XUIButton alloc] initWithFrame:rect];
-	_btn.titleLabel.font = gButtonTitleFont;
+	_btn.titleLabel.font = [UIFont systemFontOfSize:14];
 	[_btn setTitleColor:[UIColor colorWithWhite:0 alpha:1] forState:UIControlStateNormal];
 	[_btn setTitle:title forState:UIControlStateNormal];
 	[_btn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
@@ -169,7 +169,7 @@ UIButton * createRoundCornerButton(CGRect rect,NSString *title, id target, SEL a
 	[_btn setBackgroundImage:createButtonBg([UIColor colorWithWhite:0.9 alpha:1], [UIColor whiteColor], r) forState:UIControlStateNormal];
 	[_btn setBackgroundImage:createButtonBg([UIColor blueColor], [UIColor blueColor], r) forState:UIControlStateHighlighted];
 	[_btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-	return [_btn autorelease];
+	return _btn;
 }
 
 UIButton * createColorizeImgButton(CGRect rect,NSString *imgName,UIColor *color, id target, SEL action){
@@ -204,7 +204,7 @@ UIButton * createColorizeImgButton(CGRect rect,NSString *imgName,UIColor *color,
         [btn setImage:img2 forState:UIControlStateHighlighted];
     if (target)
         [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-	return [btn autorelease];
+	return btn;
 }
 UIButton * createImgButton(CGRect rect,NSString *imgName,id target, SEL action){
     return createColorizeImgButton(rect, imgName,nil, target, action);
@@ -215,7 +215,7 @@ UIButton * createPlayButton(CGRect rect,id target,SEL action){
     if (rect.size.width<10) {
         rect.size = icon_play.size;
     }
-    UIButton *btn = [[[XUIButton alloc] initWithFrame:rect] autorelease];
+    UIButton *btn = [[XUIButton alloc] initWithFrame:rect];
     [btn setImage:icon_play forState:UIControlStateNormal];
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return btn;
@@ -229,7 +229,7 @@ UIButton *createImageButton(CGRect frame, NSString *imageName, id target, SEL ac
 }
 UIButton *createButton(CGRect frame, NSString *title, id imgName,id target, SEL action){
     if ( (frame.size.width == 0 || frame.size.height == 0) && [title length] > 0 ) {
-        CGSize size = title ? [title sizeWithFont:gButtonTitleFont] : CGSizeMake(48, 28);
+        CGSize size = title ? [title sizeWithFont:[UIFont systemFontOfSize:14]] : CGSizeMake(48, 28);
         frame = CGRectMake(0,0, MAX(size.width+20, 44), size.height+10);
     }
     if ( ( !title || [title isEqualToString:@""] ) && ![imgName isKindOfClass:[UIColor class]] ) {
@@ -238,9 +238,9 @@ UIButton *createButton(CGRect frame, NSString *title, id imgName,id target, SEL 
             frame.size = CGSizeMake( backgroundImage.size.width, backgroundImage.size.height);
         }
     }
-    UIButton *btn = AUTORELEASE([[XUIButton alloc] initWithFrame:frame]);
-    btn.titleLabel.font = gButtonTitleFont;
-    btn.titleLabel.textColor = gButtonTitleColor;
+    UIButton *btn = [[XUIButton alloc] initWithFrame:frame];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    //btn.titleLabel.textColor = gButtonTitleColor;
     [btn setTitle:title forState:UIControlStateNormal];
     setButtonImage(btn, imgName, nil,title?YES:NO);
     if (target)
@@ -253,10 +253,10 @@ CGSize CGSizeScale(CGSize size,float scale){
 }
 UIImage *createButtonCircleBg(CGSize size,float rad,UIColor *borderColor,UIColor *color1,UIColor *color2,UIColor *color3,UIColor *color4){
     if (!color1) {
-        color1 = gButtonCircleBgGradColor1;
-        color2 = gButtonCircleBgGradColor2;
-        color3 = gButtonCircleBgGradColor3;
-        color4 = gButtonCircleBgGradColor4;
+        color1 = [UIColor grayColor];
+        color2 = [UIColor grayColor];
+        color3 = [UIColor grayColor];
+        color4 = [UIColor grayColor];
     }
     
     CGRect rect = CGRectMake(0, 0, size.width, size.height);	
@@ -300,8 +300,8 @@ UIImage *createButtonCircleBg(CGSize size,float rad,UIColor *borderColor,UIColor
 
 @implementation XUIButton
 - (void)dealloc{
-    RELEASE(_object);
-    [super dealloc];
+    (_object=nil);
+    
 }
 - (void)awakeFromNib{
     [super awakeFromNib];

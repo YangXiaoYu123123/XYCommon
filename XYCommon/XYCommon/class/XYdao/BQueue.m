@@ -7,6 +7,7 @@
 //
 
 #import "BQueue.h"
+#import "XYCommon.h"
 
 @implementation BQueueItem
 
@@ -28,16 +29,15 @@
     return self;
 }
 - (void)dealloc{
-    RELEASE(_domain);
-    RELEASE(_key);
-    RELEASE(_qid);
-    RELEASE(_data);
-    RELEASE(_data2);
-    RELEASE(_data3);
-    RELEASE(_data4);
-    RELEASE(_data5);
-    RELEASE(_data6);
-    [super dealloc];
+    _domain=nil;
+    (_key=nil);
+    (_qid=nil);
+    (_data=nil);
+    (_data2=nil);
+    (_data3=nil);
+    (_data4=nil);
+    (_data5=nil);
+    (_data6=nil);
 }
 
 
@@ -106,7 +106,7 @@
     FMDatabase *db = [self db];
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE qid=? LIMIT 0,1",qid];
     if ([rs next]) {
-        ret = [[[BQueueItem alloc] initWithDictionary:[rs resultDictionary]] autorelease];
+        ret = [[BQueueItem alloc] initWithDictionary:[rs resultDictionary]];
     }
     [self close:db];
 	return ret;
@@ -116,7 +116,7 @@
     FMDatabase *db = [self db];
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE qid=? AND key=? LIMIT 0,1",qid,key];
     if ([rs next]) {
-        ret = [[[BQueueItem alloc] initWithDictionary:[rs resultDictionary]] autorelease];
+        ret = [[BQueueItem alloc] initWithDictionary:[rs resultDictionary]];
     }
     [self close:db];
 	return ret;
@@ -130,8 +130,8 @@
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE qid=? ORDER BY id ASC", qid];
     ret = [NSMutableArray array];
     while ([rs next]) {
-        BQueueItem *qItem = AUTORELEASE([[BQueueItem alloc] initWithDictionary:[rs resultDictionary]]);
-        id qData = clazz ? AUTORELEASE([[clazz alloc] initWithDictionary:[[qItem data] json]]) : qItem;
+        BQueueItem *qItem = [[BQueueItem alloc] initWithDictionary:[rs resultDictionary]];
+        id qData = clazz ? [[clazz alloc] initWithDictionary:[[qItem data] json]] : qItem;
         [ret addObject:qData];
     }
 	[self close:db];
@@ -238,7 +238,7 @@
     FMDatabase *db = [self db];
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE domain=? LIMIT 0,1",domain];
     if ([rs next]) {
-        ret = [[[BQueueItem alloc] initWithDictionary:[rs resultDict]] autorelease];
+        ret = [[BQueueItem alloc] initWithDictionary:[rs resultDict]];
     }
     [self close:db];
 	return ret;
@@ -248,7 +248,7 @@
     FMDatabase *db = [self db];
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE domain=? AND qid=? LIMIT 0,1",domain, qid];
     if ([rs next]) {
-        ret = [[[BQueueItem alloc] initWithDictionary:[rs resultDict]] autorelease];
+        ret = [[BQueueItem alloc] initWithDictionary:[rs resultDict]];
     }
     [self close:db];
 	return ret;
@@ -262,7 +262,7 @@
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE domain=? AND qid=? ORDER BY id ASC",domain,qid];
     ret = [NSMutableArray array];
     while ([rs next]) {
-        BQueueItem *qData = [[[BQueueItem alloc] initWithDictionary:[rs resultDict]] autorelease];
+        BQueueItem *qData = [[BQueueItem alloc] initWithDictionary:[rs resultDict]];
         [ret addObject:qData];
     }
 	[self close:db];
@@ -274,7 +274,7 @@
 	FMResultSet *rs = [db executeQuery:@"SELECT * FROM queue WHERE domain=?",domain];
     ret = [NSMutableArray array];
     while ([rs next]) {
-        BQueueItem *qData = [[[BQueueItem alloc] initWithDictionary:[rs resultDictionary]] autorelease];
+        BQueueItem *qData = [[BQueueItem alloc] initWithDictionary:[rs resultDictionary]];
         [ret addObject:qData];
     }
 	[self close:db];

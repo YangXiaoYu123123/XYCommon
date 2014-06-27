@@ -64,7 +64,7 @@
     for (UIView *v in self.subviews) {
         //DLOG(@"nav bar:%@",v);
         if ([NSStringFromClass([v class]) isEqualToString:@"UINavigationBarBackground"]) {
-            UIImageView *imgView = [[[UIImageView alloc] initWithFrame:v.bounds] autorelease];
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:v.bounds];
             [imgView setTag:NavBgViewTag];
             [imgView setImage:bgImg];
             [v addSubview:imgView];
@@ -74,7 +74,7 @@
         }
     }
     if (!flag) {
-        UIImageView *imgView = [[[UIImageView alloc] initWithFrame:self.bounds] autorelease];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.bounds];
         [imgView setTag:NavBgViewTag];
         [imgView setImage:bgImg];
         [self addSubview:imgView];
